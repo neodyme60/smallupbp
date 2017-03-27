@@ -398,7 +398,13 @@ INLINE std::istream& operator>>(std::istream& is, Float4& vect) {
 // Vector of 4 int values.
 class Int4 {
 public:
-    union __attribute__((aligned(16))){
+
+#if defined(_MSC_VER)
+    __declspec(align(16)) union {
+#endif
+#if defined(__GNUC__)
+    union __attribute__((aligned(16))) {
+#endif
         __m128i _sse;
 
         struct { 
