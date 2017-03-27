@@ -103,7 +103,12 @@ namespace embree
       }
 
       __forceinline void inc() { activeTasks++; }
-      __forceinline void dec() { 
+#if defined(_MSC_VER)
+        __forceinline void dec() {
+#endif
+#if defined(__GNUC__)
+        void dec() {
+#endif
         if (--activeTasks == 0) {
           Event* other = this->other;
           trigger(); // may cause this event to get destroyed

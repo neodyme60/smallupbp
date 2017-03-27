@@ -30,10 +30,10 @@
 #include <vector>
 #include <cmath>
 
-#include "..\Beams\Beamdensity.hxx"
-#include "..\Misc\Framebuffer.hxx"
-#include "..\Misc\DebugImages.hxx"
-#include "..\Scene\Scene.hxx"
+#include "../Beams/BeamDensity.hxx"
+#include "../Misc/Framebuffer.hxx"
+#include "../Misc/DebugImages.hxx"
+#include "../Scene/Scene.hxx"
 
 class AbstractRenderer
 {

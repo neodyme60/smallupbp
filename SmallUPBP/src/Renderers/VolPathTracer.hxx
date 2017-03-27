@@ -30,8 +30,8 @@
 #include <vector>
 #include <cmath>
 
-#include "Path\Bsdf.hxx"
-#include "Renderers\Renderer.hxx"
+#include "Path/Bsdf.hxx"
+#include "Renderers/Renderer.hxx"
 
 class VolPathTracer : public AbstractRenderer
 {

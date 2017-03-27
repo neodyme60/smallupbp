@@ -27,10 +27,10 @@
 #ifndef __BRE_HXX__
 #define __BRE_HXX__
 
-#include "..\Path\VltPathVertex.hxx"
-#include "..\Path\UPBPLightVertex.hxx"
-#include "include\embree.h"
-#include "common\ray.h"
+#include "../Path/VltPathVertex.hxx"
+#include "../Path/UPBPLightVertex.hxx"
+#include "include/embree.h"
+#include "common/ray.h"
 
 class EmbreePhoton;
 

@@ -25,23 +25,28 @@
  */
 
 // embree includes
-#include "include\embree.h"
-#include "common\ray.h"
+#include "include/embree.h"
+#include "common/ray.h"
 
 #include "Bre.hxx"
-#include "..\Beams\PhBeams.hxx"
-#include "..\Misc\Timer.hxx"
-#include "..\Misc\KdTmpl.hxx"
-#include "..\Misc\DebugImages.hxx"
-#include "..\Path\PathWeight.hxx"
-#include "..\Structs\BoundingBox.hxx"
+#include "../Beams/PhBeams.hxx"
+#include "../Misc/Timer.hxx"
+#include "../Misc/KdTmpl.hxx"
+#include "../Misc/DebugImages.hxx"
+#include "../Path/PathWeight.hxx"
+#include "../Structs/BoundingBox.hxx"
 
 /**
  * @brief	Defines an alias representing the kd tree.
  */
 typedef KdTreeTmplPtr< Pos,Pos > KdTree;
 
+#if defined(_MSC_VER)
 const float MAX_FLOAT_SQUARE_ROOT = std::sqrtf(std::numeric_limits< float >::max());	//!< The maximum float square root
+#endif
+#if defined(__GNUC__)
+const float MAX_FLOAT_SQUARE_ROOT = std::sqrt(std::numeric_limits< float >::max());	//!< The maximum float square root
+#endif
 
 // ----------------------------------------------------------------------------------------------
 

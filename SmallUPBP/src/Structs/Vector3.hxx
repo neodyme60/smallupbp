@@ -30,7 +30,7 @@
 #include <xmmintrin.h>
 #include <smmintrin.h>
 
-#include "..\Misc\Utils.hxx"
+#include "../Misc/Utils.hxx"
 
 //////////////////////////////////////////////////////////////////////////
 // Classes representing position and direction

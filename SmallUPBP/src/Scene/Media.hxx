@@ -27,8 +27,8 @@
 #ifndef __MEDIUM_HXX__
 #define __MEDIUM_HXX__
 
-#include "..\Path\Ray.hxx"
-#include "..\Misc\Utils2.hxx"
+#include "../Path/Ray.hxx"
+#include "../Misc/Utils2.hxx"
 
 #define MEDIUM_SURVIVAL_PROB 0.8f
 

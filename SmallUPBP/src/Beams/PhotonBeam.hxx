@@ -29,10 +29,10 @@
 
 #include <vector>
 
-#include "common\ray.h"
-#include "..\Misc\Debugimages.hxx"
-#include "..\Structs\BoundingBox.hxx"
-#include "..\Path\PathWeight.hxx"
+#include "common/ray.h"
+#include "../Misc/DebugImages.hxx"
+#include "../Structs/BoundingBox.hxx"
+#include "../Path/PathWeight.hxx"
 
 /**
  * @brief	Photon beam.
@@ -283,7 +283,12 @@ struct PhotonBeam
 
 		oT2 = (oT1 + d1O1 - d1O2) / d1d2;
 		// Out of range on ray 2.
-		if (oT2 <= minT2 || oT2 >= maxT2 || _isnanf(oT2))
+#if defined(_MSC_VER)
+		if (oT2 <= minT2 || oT2 >= maxT2 || _isnan(oT2))
+#endif
+#if defined(__GNUC__)
+		if (oT2 <= minT2 || oT2 >= maxT2 || std::isnan(oT2))
+#endif
 			return false;
 
 		const float sinTheta = std::sqrt(sinThetaSqr);

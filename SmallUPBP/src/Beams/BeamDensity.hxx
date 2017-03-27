@@ -28,8 +28,8 @@
 #define __BEAMDENSITY_HXX__
 
 #include "GridStats.hxx"
-#include "..\Misc\Utils2.hxx"
-#include "..\Misc\Framebuffer.hxx"
+#include "../Misc/Utils2.hxx"
+#include "../Misc/Framebuffer.hxx"
 
 /**
  * @brief	Class that accumulates and outputs as false color images several statistics for

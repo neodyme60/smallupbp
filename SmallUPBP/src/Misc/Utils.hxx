@@ -60,7 +60,7 @@ namespace Float {
      * @return	true if Not a Number.
      */
     INLINE bool isNan(const float x) {
-        return _isnanf(x) != 0;
+        return std::isnan(x) != 0;
     }
 
 	/**

@@ -30,9 +30,9 @@
 #include <vector>
 #include <cmath>
 
-#include "..\Path\Ray.hxx"
-#include "..\Structs\Mat4f.hxx"
-#include "..\Structs\Vector3.hxx"
+#include "../Path/Ray.hxx"
+#include "../Structs/Mat4f.hxx"
+#include "../Structs/Vector3.hxx"
 
 class Camera
 {

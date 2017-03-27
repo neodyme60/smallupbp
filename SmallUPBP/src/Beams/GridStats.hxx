@@ -27,7 +27,7 @@
 #ifndef __GRIDSTATS_HXX__
 #define __GRIDSTATS_HXX__
 
-#include "..\Misc\Defs.hxx"
+#include "../Misc/Defs.hxx"
 
 /**
  * @brief	Grid statistics.

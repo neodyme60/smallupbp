@@ -33,10 +33,10 @@
 #include <algorithm>
 #include <omp.h>
 
-#include "include\embree.h"
-#include "common\ray.h"
-#include "..\Misc\Utils2.hxx"
-#include "..\Path\Ray.hxx"
+#include "include/embree.h"
+#include "common/ray.h"
+#include "../Misc/Utils2.hxx"
+#include "../Path/Ray.hxx"
 #include "Materials.hxx"
 
 

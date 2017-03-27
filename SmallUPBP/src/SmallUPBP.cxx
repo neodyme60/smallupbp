@@ -26,8 +26,8 @@
 
 #pragma warning(disable: 4482)
 
-#include "Bre\EmbreeAcc.hxx"
-#include "Misc\Config.hxx"
+#include "Bre/EmbreeAcc.hxx"
+#include "Misc/Config.hxx"
 
 // Output image in continuous outputting
 void continuousOutput(const Config &aConfig, int iter, Framebuffer & accumFrameBuffer, Framebuffer & outputFrameBuffer, AbstractRenderer* renderer, const std::string & name, const std::string & ext, char * filename)
@@ -41,8 +41,12 @@ void continuousOutput(const Config &aConfig, int iter, Framebuffer & accumFrameB
 			outputFrameBuffer.Clear();
 			outputFrameBuffer.AddScaled(accumFrameBuffer, 1.0f / iter);
 
-			
+#if defined(_MSC_VER)
 			sprintf_s(filename,1024,"%s-%d.%s", name.c_str(), iter, ext.c_str());
+#endif
+#if defined(__GNUC__)
+			snprintf(filename,1024,"%s-%d.%s", name.c_str(), iter, ext.c_str());
+#endif
 			//// Saves the image
 			outputFrameBuffer.Save(filename);
 		}

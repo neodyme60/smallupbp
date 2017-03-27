@@ -30,8 +30,8 @@
 #include <vector>
 #include <cmath>
 
-#include "..\Misc\HashGrid.hxx"
-#include "..\Path\Bsdf.hxx"
+#include "../Misc/HashGrid.hxx"
+#include "../Path/Bsdf.hxx"
 #include "Renderer.hxx"
 
 ////////////////////////////////////////////////////////////////////////////////

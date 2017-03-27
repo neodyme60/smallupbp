@@ -48,7 +48,7 @@
 
 //////////////////////////////////////////////////////////////////////////
 // Typedefs
-
+#if defined(_MSC_VER)
 typedef __int8              int8;
 typedef __int16             int16;
 typedef __int64             int64;
@@ -56,8 +56,17 @@ typedef unsigned int        uint;
 typedef unsigned __int8     uint8;
 typedef unsigned __int16    uint16;
 typedef unsigned __int64    uint64;
+#endif //(_MSC_VER)
 
-
+#if defined(__GNUC__)
+typedef char       int8;
+typedef short      int16;
+typedef long long  int64;
+typedef unsigned int        uint;
+typedef unsigned char     	uint8;
+typedef unsigned short    	uint16;
+typedef unsigned long long  uint64;
+#endif //__GNUC__
 //////////////////////////////////////////////////////////////////////////
 // Constants
 
@@ -109,7 +118,7 @@ const float FLOAT_INFINITY = std::numeric_limits<float>::infinity();
  * @brief	Forced inlining of a function - because other compilers like g++ have different
  * 			forced inline directives.
  */
-#define INLINE __forceinline
+#define INLINE inline
 
 /**
  * @brief	Disables SSE 4.0/4.1 intrinsics (to be able to run on older CPUs). Uncommenting

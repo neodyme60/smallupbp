@@ -31,7 +31,7 @@
 #include <cmath>
 
 #include "PhaseFunction.hxx"
-#include "..\Scene\Scene.hxx"
+#include "../Scene/Scene.hxx"
 
 #define STRICT_NORMALS
 

@@ -30,11 +30,11 @@
 #include <vector>
 #include <cmath>
 
-#include "..\Beams\PhBeams.hxx"
-#include "..\Bre\Bre.hxx"
-#include "..\Misc\HashGrid.hxx"
-#include "..\Misc\Timer.hxx"
-#include "..\Path\PathWeight.hxx"
+#include "../Beams/PhBeams.hxx"
+#include "../Bre/Bre.hxx"
+#include "../Misc/HashGrid.hxx"
+#include "../Misc/Timer.hxx"
+#include "../Path/PathWeight.hxx"
 #include "Renderer.hxx"
 
 #define UPBP_CAMERA_MAXVERTS 1001

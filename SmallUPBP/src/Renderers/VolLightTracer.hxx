@@ -30,10 +30,10 @@
 #include <vector>
 #include <cmath>
 
-#include "..\Beams\PhBeams.hxx"
-#include "..\Bre\Bre.hxx"
-#include "..\Misc\Timer.hxx"
-#include "..\Path\VltPathVertex.hxx"
+#include "../Beams/PhBeams.hxx"
+#include "../Bre/Bre.hxx"
+#include "../Misc/Timer.hxx"
+#include "../Path/VltPathVertex.hxx"
 #include "Renderer.hxx"
 
 class VolLightTracer : public AbstractRenderer

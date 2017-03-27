@@ -36,13 +36,13 @@
 #include <set>
 #include <sstream>
 
-#include "..\Renderers\EyeLight.hxx"
-#include "..\Renderers\PathTracer.hxx"
-#include "..\Renderers\VertexCM.hxx"
-#include "..\Renderers\VolBidirPT.hxx"
-#include "..\Renderers\VolLightTracer.hxx"
-#include "..\Renderers\VolPathTracer.hxx"
-#include "..\Renderers\UPBP.hxx"
+#include "../Renderers/EyeLight.hxx"
+#include "../Renderers/PathTracer.hxx"
+#include "../Renderers/VertexCM.hxx"
+#include "../Renderers/VolBidirPT.hxx"
+#include "../Renderers/VolLightTracer.hxx"
+#include "../Renderers/VolPathTracer.hxx"
+#include "../Renderers/UPBP.hxx"
 
 /**
  * @brief	Renderer configuration, holds algorithm, scene, and all other settings.
@@ -1418,7 +1418,12 @@ void ParseCommandline(int argc, const char *argv[], Config &oConfig)
 			if (++i == argc) ReportParsingError("missing argument of -r option, please see help (-hf)");
 
 			int w = -1, h = -1;
+#if defined(_MSC_VER)
 			sscanf_s(argv[i], "%dx%d", &w, &h);
+#endif
+#if defined(__GNUC__)
+			sscanf(argv[i], "%dx%d", &w, &h);
+#endif
 			if (w <= 0 || h <= 0) ReportParsingError("invalid argument of -r option, please see help (-hf)");
 			oConfig.mResolution = Vec2i(w, h);
 
@@ -1464,7 +1469,12 @@ void ParseCommandline(int argc, const char *argv[], Config &oConfig)
 			if (++i == argc) ReportParsingError("missing argument of -r_alpha option, please see help (-hf)");
 
 			float alpha;
+#if defined(_MSC_VER)
 			sscanf_s(argv[i], "%f", &alpha);
+#endif
+#if defined(__GNUC__)
+			sscanf(argv[i], "%f", &alpha);
+#endif
 			if (alpha <= 0.0f) ReportParsingError("invalid argument of -r_alpha option, please see help (-hf)");
 
 			if (!r_alpha_surf_set)
@@ -1481,8 +1491,12 @@ void ParseCommandline(int argc, const char *argv[], Config &oConfig)
 		else if (arg == "-r_alpha_surf") // radius reduction factor for surface photon mapping
 		{
 			if (++i == argc) ReportParsingError("missing argument of -r_alpha_surf option, please see help (-hf)");
-
+#if defined(_MSC_VER)
 			sscanf_s(argv[i], "%f", &oConfig.mSurfRadiusAlpha);
+#endif
+#if defined(__GNUC__)
+			sscanf(argv[i], "%f", &oConfig.mSurfRadiusAlpha);
+#endif
 			if (oConfig.mSurfRadiusAlpha <= 0.0f) ReportParsingError("invalid argument of -r_alpha_surf option, please see help (-hf)");
 
 			r_alpha_surf_set = true;
@@ -1491,8 +1505,13 @@ void ParseCommandline(int argc, const char *argv[], Config &oConfig)
 		else if (arg == "-r_alpha_pp3d") // radius reduction factor for PP3D
 		{
 			if (++i == argc) ReportParsingError("missing argument of -r_alpha_pp3d option, please see help (-hf)");
-
+#if defined(_MSC_VER)
 			sscanf_s(argv[i], "%f", &oConfig.mPP3DRadiusAlpha);
+#endif
+#if defined(__GNUC__)
+			sscanf(argv[i], "%f", &oConfig.mPP3DRadiusAlpha);
+#endif
+
 			if (oConfig.mPP3DRadiusAlpha <= 0.0f) ReportParsingError("invalid argument of -r_alpha_pp3d option, please see help (-hf)");
 
 			r_alpha_pp3d_set = true;
@@ -1501,8 +1520,12 @@ void ParseCommandline(int argc, const char *argv[], Config &oConfig)
 		else if (arg == "-r_alpha_pb2d") // radius reduction factor for PB2D
 		{
 			if (++i == argc) ReportParsingError("missing argument of -r_alpha_pb2d option, please see help (-hf)");
-
+#if defined(_MSC_VER)
 			sscanf_s(argv[i], "%f", &oConfig.mPB2DRadiusAlpha);
+#endif
+#if defined(__GNUC__)
+			sscanf(argv[i], "%f", &oConfig.mPB2DRadiusAlpha);
+#endif
 			if (oConfig.mPB2DRadiusAlpha <= 0.0f) ReportParsingError("invalid argument of -r_alpha_pb2d option, please see help (-hf)");
 
 			r_alpha_pb2d_set = true;
@@ -1511,8 +1534,12 @@ void ParseCommandline(int argc, const char *argv[], Config &oConfig)
 		else if (arg == "-r_alpha_bb1d") // radius reduction factor for BB1D
 		{
 			if (++i == argc) ReportParsingError("missing argument of -r_alpha_bb1d option, please see help (-hf)");
-
+#if defined(_MSC_VER)
 			sscanf_s(argv[i], "%f", &oConfig.mBB1DRadiusAlpha);
+#endif
+#if defined(__GNUC__)
+			sscanf(argv[i], "%f", &oConfig.mBB1DRadiusAlpha);
+#endif
 			if (oConfig.mBB1DRadiusAlpha <= 0.0f) ReportParsingError("invalid argument of -r_alpha_bb1d option, please see help (-hf)");
 
 			r_alpha_bb1d_set = true;
@@ -1521,9 +1548,13 @@ void ParseCommandline(int argc, const char *argv[], Config &oConfig)
 		else if (arg == "-r_initial") // initial radius 
 		{
 			if (++i == argc) ReportParsingError("missing argument of -r_initial option, please see help (-hf)");
-
 			float init;
+#if defined(_MSC_VER)
 			sscanf_s(argv[i], "%f", &init);
+#endif
+#if defined(__GNUC__)
+			sscanf(argv[i], "%f", &init);
+#endif
 			if (init == 0.0f) ReportParsingError("invalid argument of -r_initial option, please see help (-hf)");
 
 			if (!r_init_surf_set)
@@ -1546,8 +1577,12 @@ void ParseCommandline(int argc, const char *argv[], Config &oConfig)
 		else if (arg == "-r_initial_surf") // initial radius for surface photon mapping
 		{
 			if (++i == argc) ReportParsingError("missing argument of -r_initial_surf option, please see help (-hf)");
-
+#if defined(_MSC_VER)
 			sscanf_s(argv[i], "%f", &oConfig.mSurfRadiusInitial);
+#endif
+#if defined(__GNUC__)
+			sscanf(argv[i], "%f", &oConfig.mSurfRadiusInitial);
+#endif
 			if (oConfig.mSurfRadiusInitial == 0.0f) ReportParsingError("invalid argument of -r_initial_surf option, please see help (-hf)");
 
 			r_init_surf_set = true;
@@ -1556,8 +1591,12 @@ void ParseCommandline(int argc, const char *argv[], Config &oConfig)
 		else if (arg == "-r_initial_pp3d") // initial radius for PP3D
 		{
 			if (++i == argc) ReportParsingError("missing argument of -r_initial_pp3d option, please see help (-hf)");
-
+#if defined(_MSC_VER)
 			sscanf_s(argv[i], "%f", &oConfig.mPP3DRadiusInitial);
+#endif
+#if defined(__GNUC__)
+			sscanf(argv[i], "%f", &oConfig.mPP3DRadiusInitial);
+#endif
 			if (oConfig.mPP3DRadiusInitial == 0.0f) ReportParsingError("invalid argument of -r_initial_pp3d option, please see help (-hf)");
 
 			r_init_pp3d_set = true;
@@ -1566,9 +1605,13 @@ void ParseCommandline(int argc, const char *argv[], Config &oConfig)
 		else if (arg == "-r_initial_pb2d") // initial radius for PB2D
 		{
 			if (++i == argc) ReportParsingError("missing argument of -r_initial_pb2d option, please see help (-hf)");
-
 			float init;
+#if defined(_MSC_VER)
 			sscanf_s(argv[i], "%f", &init);
+#endif
+#if defined(__GNUC__)
+			sscanf(argv[i], "%f", &init);
+#endif
 			if (init == 0.0f) ReportParsingError("invalid argument of -r_initial_pb2d option, please see help (-hf)");
 
 			if (!r_init_pb2d_knn_set)
@@ -1583,9 +1626,13 @@ void ParseCommandline(int argc, const char *argv[], Config &oConfig)
 		else if (arg == "-r_initial_bb1d") // initial radius for BB1D
 		{
 			if (++i == argc) ReportParsingError("missing argument of -r_initial_bb1d option, please see help (-hf)");
-
 			float init;
+#if defined(_MSC_VER)
 			sscanf_s(argv[i], "%f", &init);
+#endif
+#if defined(__GNUC__)
+			sscanf(argv[i], "%f", &init);
+#endif
 			if (init == 0.0f) ReportParsingError("invalid argument of -r_initial_bb1d option, please see help (-hf)");
 
 			if (!r_init_bb1d_knn_set)
@@ -1600,13 +1647,21 @@ void ParseCommandline(int argc, const char *argv[], Config &oConfig)
 		else if (arg == "-r_initial_pb2d_knn") // initial radius for PB2D based on k-th nearest photon
 		{
 			if (++i == argc) ReportParsingError("missing first argument of -r_initial_pb2d_knn option, please see help (-hf)");
-
+#if defined(_MSC_VER)
 			sscanf_s(argv[i], "%f", &oConfig.mPB2DRadiusInitial);
+#endif
+#if defined(__GNUC__)
+			sscanf(argv[i], "%f", &oConfig.mPB2DRadiusInitial);
+#endif
 			if (oConfig.mPB2DRadiusInitial <= 0.0f) ReportParsingError("invalid first argument of -r_initial_pb2d_knn option, please see help (-hf)");
 
 			if (++i == argc) ReportParsingError("missing second argument of -r_initial_pb2d_knn option, please see help (-hf)");
-
+#if defined(_MSC_VER)
 			sscanf_s(argv[i], "%d", &oConfig.mPB2DRadiusKNN);
+#endif
+#if defined(__GNUC__)
+			sscanf(argv[i], "%d", &oConfig.mPB2DRadiusKNN);
+#endif
 			if (oConfig.mPB2DRadiusKNN <= 0) ReportParsingError("invalid second argument of -r_initial_pb2d_knn option, please see help (-hf)");
 
 			oConfig.mPB2DRadiusCalculation = KNN_RADIUS;
@@ -1617,13 +1672,21 @@ void ParseCommandline(int argc, const char *argv[], Config &oConfig)
 		else if (arg == "-r_initial_bb1d_knn") // initial radius for BB1D based on k-th nearest beam vertex
 		{
 			if (++i == argc) ReportParsingError("missing first argument of -r_initial_bb1d_knn option, please see help (-hf)");
-
+#if defined(_MSC_VER)
 			sscanf_s(argv[i], "%f", &oConfig.mBB1DRadiusInitial);
+#endif
+#if defined(__GNUC__)
+			sscanf(argv[i], "%f", &oConfig.mBB1DRadiusInitial);
+#endif
 			if (oConfig.mBB1DRadiusInitial <= 0.0f) ReportParsingError("invalid first argument of -r_initial_bb1d_knn option, please see help (-hf)");
 
 			if (++i == argc) ReportParsingError("missing second argument of -r_initial_bb1d_knn option, please see help (-hf)");
-
+#if defined(_MSC_VER)
 			sscanf_s(argv[i], "%d", &oConfig.mBB1DRadiusKNN);
+#endif
+#if defined(__GNUC__)
+			sscanf(argv[i], "%d", &oConfig.mBB1DRadiusKNN);
+#endif
 			if (oConfig.mBB1DRadiusKNN <= 0) ReportParsingError("invalid second argument of -r_initial_bb1d_knn option, please see help (-hf)");
 
 			oConfig.mBB1DRadiusCalculation = KNN_RADIUS;
@@ -1720,9 +1783,12 @@ void ParseCommandline(int argc, const char *argv[], Config &oConfig)
 			oConfig.mBeamDensType = static_cast<BeamDensity::ImgType>(type);
 			
 			if (++i == argc) ReportParsingError("missing second argument of -beamdens option, please see help (-hf)");
-
+#if defined(_MSC_VER)
 			sscanf_s(argv[i], "%f", &oConfig.mBeamDensMax);
-
+#endif
+#if defined(__GNUC__)
+			sscanf(argv[i], "%f", &oConfig.mBeamDensMax);
+#endif
 			if (iss.fail()) ReportParsingError("invalid second argument of -beamdens option, please see help (-hf)");
 
 			additionalArgs << "_beamdens" << type << "-" << argv[i];
@@ -1730,9 +1796,12 @@ void ParseCommandline(int argc, const char *argv[], Config &oConfig)
 		else if (arg == "-beamstore") // factor for decision which media will use beams
 		{
 			if (++i == argc) ReportParsingError("missing argument of -beamstore option, please see help (-hf)");
-
+#if defined(_MSC_VER)
 			sscanf_s(argv[i], "%f", &oConfig.mBB1DBeamStorageFactor);
-
+#endif
+#if defined(__GNUC__)
+			sscanf(argv[i], "%f", &oConfig.mBB1DBeamStorageFactor);
+#endif
 			if (oConfig.mBB1DBeamStorageFactor < 0) ReportParsingError("invalid argument of -beamstore option, please see help (-hf)");
 
 			additionalArgs << "_beamstore" << argv[i];
@@ -1740,9 +1809,13 @@ void ParseCommandline(int argc, const char *argv[], Config &oConfig)
 		else if (arg == "-qbt") // query beam type
 		{
 			if (++i == argc) ReportParsingError("missing argument of -qbt option, please see help (-hf)");
-
 			char a[2];
+#if defined(_MSC_VER)
 			sscanf_s(argv[i], "%s", &a,2);
+#endif
+#if defined(__GNUC__)
+			sscanf(argv[i], "%s", &a,2);
+#endif
 			if (a[0] == 'L' || a[0] == 'l')
 				oConfig.mQueryBeamType = LONG_BEAM;
 			else
@@ -1751,9 +1824,13 @@ void ParseCommandline(int argc, const char *argv[], Config &oConfig)
 		else if (arg == "-pbt") // photon beam type
 		{
 			if (++i == argc) ReportParsingError("missing argument of -pbt option, please see help (-hf)");
-
 			char a[2];
+#if defined(_MSC_VER)
 			sscanf_s(argv[i], "%s", &a, 2);
+#endif
+#if defined(__GNUC__)
+			sscanf(argv[i], "%s", &a, 2);
+#endif
 			if (a[0] == 'L' || a[0] == 'l')
 				oConfig.mPhotonBeamType = LONG_BEAM;
 			else
@@ -1762,8 +1839,12 @@ void ParseCommandline(int argc, const char *argv[], Config &oConfig)
 		else if (arg == "-pbc") // paths with beams count
 		{
 			if (++i == argc) ReportParsingError("missing argument of -pbc option, please see help (-hf)");
-
+#if defined(_MSC_VER)
 			sscanf_s(argv[i], "%f", &oConfig.mBB1DUsedLightSubPathCount);
+#endif
+#if defined(__GNUC__)
+			sscanf(argv[i], "%f", &oConfig.mBB1DUsedLightSubPathCount);
+#endif
 			if (oConfig.mBB1DUsedLightSubPathCount == 0.0f) ReportParsingError("invalid argument of -pbc option, please see help (-hf)");
 
 			additionalArgs << "_pbc" << argv[i];
@@ -1861,16 +1942,23 @@ void ParseCommandline(int argc, const char *argv[], Config &oConfig)
 		else if (arg == "-min_dist2med") // minimum distance from camera to medium
 		{
 			if (++i == argc) ReportParsingError("missing argument of -min_dist2med option, please see help (-hf)");
-
+#if defined(_MSC_VER)
 			sscanf_s(argv[i], "%f", &oConfig.mMinDistToMed);
-
+#endif
+#if defined(__GNUC__)
+			sscanf(argv[i], "%f", &oConfig.mMinDistToMed);
+#endif
 			additionalArgs << "_mindist2med" << argv[i];
 		}
 		else if (arg == "-rpcpi") // reference path count per iteration
 		{
 			if (++i == argc) ReportParsingError("missing argument of -rpcpi option, please see help (-hf");
-
+#if defined(_MSC_VER)
 			sscanf_s(argv[i], "%f", &oConfig.mRefPathCountPerIter);
+#endif
+#if defined(__GNUC__)
+			sscanf(argv[i], "%f", &oConfig.mRefPathCountPerIter);
+#endif
 			if (std::floor(oConfig.mRefPathCountPerIter) == 0.0f) ReportParsingError("invalid argument of -rpcpi option, please see help (-hf)");
 
 			additionalArgs << "_rpcpi" << argv[i];
@@ -1878,8 +1966,12 @@ void ParseCommandline(int argc, const char *argv[], Config &oConfig)
 		else if (arg == "-pcpi") // path count per iteration
 		{
 			if (++i == argc) ReportParsingError("missing argument of -pcpi option, please see help (-hf)");
-
+#if defined(_MSC_VER)
 			sscanf_s(argv[i], "%f", &oConfig.mPathCountPerIter);
+#endif
+#if defined(__GNUC__)
+			sscanf(argv[i], "%f", &oConfig.mPathCountPerIter);
+#endif
 			if (std::floor(oConfig.mPathCountPerIter) == 0.0f) ReportParsingError("invalid argument of -pcpi option, please see help (-hf)");
 
 			additionalArgs << "_pcpi" << argv[i];
@@ -1887,9 +1979,13 @@ void ParseCommandline(int argc, const char *argv[], Config &oConfig)
 		else if (arg == "-sn") // surface normals
 		{
 			if (++i == argc) ReportParsingError("missing argument of -sn option, please see help (-hf)");
-
 			int a;
+#if defined(_MSC_VER)
 			sscanf_s(argv[i], "%d", &a);
+#endif
+#if defined(__GNUC__)
+			sscanf(argv[i], "%d", &a);
+#endif
 			if (a == 0)
 				AbstractGeometry::setUseShadingNormal(false);
 			else
@@ -1955,9 +2051,10 @@ void ParseCommandline(int argc, const char *argv[], Config &oConfig)
         extension = oConfig.mOutputName.substr(
             oConfig.mOutputName.length() - 4, 4);
 
+#if defined(_MSC_VER)
     if(extension != ".bmp" && extension != ".exr")
         oConfig.mOutputName += ".exr";
-
+#endif
 	oConfig.mDebugImages.Setup(oConfig.mMaxPathLength, oConfig.mResolution, debugImagesOptions, debugImagesWeightsOptions, debugImagesMisWeights);
 	
 	// Grid parameters.

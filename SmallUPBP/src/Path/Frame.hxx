@@ -30,7 +30,7 @@
 #include <vector>
 #include <cmath>
 
-#include "..\Structs\Vector3.hxx"
+#include "../Structs/Vector3.hxx"
 
 class Frame
 {

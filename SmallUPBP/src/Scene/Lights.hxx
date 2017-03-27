@@ -30,7 +30,7 @@
 #include <vector>
 #include <cmath>
 
-#include "..\Misc\Utils2.hxx"
+#include "../Misc/Utils2.hxx"
 #include "EnvMap.hxx"
 
 struct SceneSphere

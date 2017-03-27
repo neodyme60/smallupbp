@@ -35,8 +35,8 @@
 
 #include "PhotonBeam.hxx"
 #include "GridStats.hxx"
-#include "..\Path\PhaseFunction.hxx"
-#include "..\Scene\Scene.hxx"
+#include "../Path/PhaseFunction.hxx"
+#include "../Scene/Scene.hxx"
 
 class AccelStruct;
 

@@ -32,7 +32,7 @@
 #include <cstdint>
 #include <algorithm>
 
-#include "..\Structs\Rgb.hxx"
+#include "../Structs/Rgb.hxx"
 
 //////////////////////////////////////////////////////////////////////////
 // Cosine lobe hemisphere sampling

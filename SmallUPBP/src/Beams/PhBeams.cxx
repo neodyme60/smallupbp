@@ -25,8 +25,8 @@
  */
 
 #include "PhBeams.hxx"
-#include "..\Misc\Timer.hxx"
-#include "..\Misc\KdTmpl.hxx"
+#include "../Misc/Timer.hxx"
+#include "../Misc/KdTmpl.hxx"
 
 #ifdef USE_BRUTE
 #include "PhBrute.hxx"
@@ -45,7 +45,13 @@
  */
 typedef KdTreeTmplPtr< Pos, Pos > KdTree;
 
+#if defined(_MSC_VER)
 const float MAX_FLOAT_SQUARE_ROOT = std::sqrtf(std::numeric_limits< float >::max()); //!< The maximum float square root
+#endif
+#if defined(__GNUC__)
+const float MAX_FLOAT_SQUARE_ROOT = std::sqrt(std::numeric_limits< float >::max()); //!< The maximum float square root
+#endif
+
 
 uint PhotonBeamsEvaluator::sGridSize = 256;     //!< Size of the grid.
 uint PhotonBeamsEvaluator::sMaxBeamsInCell = 0; //!< Maximum number of tested beams in a single cell. 0 means no restriction.

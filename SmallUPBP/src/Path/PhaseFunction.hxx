@@ -28,7 +28,7 @@
 #define __PHASEFUNTION_HXX__
 
 #include "Frame.hxx"
-#include "..\Scene\Media.hxx"
+#include "../Scene/Media.hxx"
 
 class PhaseFunction
 {

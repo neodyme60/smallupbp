@@ -30,7 +30,7 @@
 #include <vector>
 #include <cmath>
 
-#include "..\Path\Bsdf.hxx"
+#include "../Path/Bsdf.hxx"
 #include "Renderer.hxx"
 
 class PathTracer : public AbstractRenderer

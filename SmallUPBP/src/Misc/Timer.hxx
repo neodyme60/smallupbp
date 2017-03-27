@@ -32,15 +32,24 @@
 
 #include <time.h>
 #include <string.h>
-#include <winsock2.h>
-#include <windows.h>
+#if defined(_MSC_VER)
+//#include <winsock2.h>
+//#include <windows.h>
+#endif
+#if defined(__GNUC__)
+#endif
 
 #define MAX_TIMER_NAME		256
 
 /**
  * @brief	Use to enable high performance counting through MS counters.
  */
+#if defined(_MSC_VER)
 #define MS_TIMER
+#endif
+#if defined(__GNUC__)
+//#define MS_TIMER
+#endif
 
 // Declaration -----------------------------------------------------------
 

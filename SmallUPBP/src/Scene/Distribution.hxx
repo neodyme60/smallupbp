@@ -34,7 +34,7 @@
 #include <algorithm>
 #include <vector>
 
-#include "..\Misc\Utils2.hxx"
+#include "../Misc/Utils2.hxx"
 
 struct Distribution1D 
 {

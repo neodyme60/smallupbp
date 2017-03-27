@@ -27,7 +27,7 @@
 #ifndef __EMBREEACC_HXX__
 #define __EMBREEACC_HXX__
 
-#include "include\embree.h"
+#include "include/embree.h"
 
 /**
  * @brief	Simple class with static methods for initializing and destroying embree.

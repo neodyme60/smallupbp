@@ -34,9 +34,9 @@
 #include <map>
 #include <cmath>
 
-#include "..\Misc\Rng.hxx"
-#include "..\Misc\ObjReader.hxx"
-#include "..\Path\BoundaryStack.hxx"
+#include "../Misc/Rng.hxx"
+#include "../Misc/ObjReader.hxx"
+#include "../Path/BoundaryStack.hxx"
 #include "Geometry.hxx"
 #include "Camera.hxx"
 #include "Lights.hxx"
@@ -588,7 +588,13 @@ public:
 		const BoundaryStack      &aBoundaryStack) const
     {
 		BoundaryStack stackCopy(aBoundaryStack);
+#if defined(_MSC_VER)
 		return Intersect(Ray(aPoint, aDir), Isect(aTMax), stackCopy, kIgnoreMediaAltogether | kOcclusionTest, 0, NULL, NULL, NULL, NULL);
+#endif
+#if defined(__GNUC__)
+		Isect ii(aTMax);
+		return Intersect(Ray(aPoint, aDir), ii, stackCopy, kIgnoreMediaAltogether | kOcclusionTest, 0, NULL, NULL, NULL, NULL);
+#endif
 	}
 
 	bool Occluded(
@@ -600,7 +606,13 @@ public:
 		VolumeSegments           &oVolumeSegments) const
     {
 		BoundaryStack stackCopy(aBoundaryStack);
+#if defined(_MSC_VER)
 		return Intersect(Ray(aPoint, aDir), Isect(aTMax), stackCopy, kOcclusionTest, aRaySamplingFlags, NULL, &oVolumeSegments, NULL, NULL);
+#endif
+#if defined(__GNUC__)
+		Isect ii(aTMax);
+		return Intersect(Ray(aPoint, aDir), ii, stackCopy, kOcclusionTest, aRaySamplingFlags, NULL, &oVolumeSegments, NULL, NULL);
+#endif
 	}
 
 	// Clear boundary stack and push in the global medium without any material

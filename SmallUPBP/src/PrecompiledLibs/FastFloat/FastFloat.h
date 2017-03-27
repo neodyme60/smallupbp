@@ -170,7 +170,12 @@ namespace Ff {
 
     // Gives approximate results!
     FF_INLINE float powFast(const float base, const float exponent) {
+#if defined(_MSC_VER)
         return (float&)FastPow::fastPow(_mm_set1_ps(base), _mm_set1_ps(exponent));
+#endif
+#if defined(__GNUC__)
+        return (FastPow::fastPow(_mm_set1_ps(base), _mm_set1_ps(exponent)))[0];
+#endif
     }
     FF_INLINE float pow(const float base, const float exponent) {
         return powf(base, exponent);
@@ -178,12 +183,22 @@ namespace Ff {
 
     // Gives approximate results!
     FF_INLINE float exp2fast(const float x) {
+#if defined(_MSC_VER)
         return (float&)FastPow::exp2f4(_mm_set1_ps(x));
+#endif
+#if defined(__GNUC__)
+        return (FastPow::exp2f4(_mm_set1_ps(x)))[0];
+#endif
     }
 
     // Gives approximate results!
     FF_INLINE float log2fast(const float x) {
+#if defined(_MSC_VER)
         return (float&)FastPow::log2f4(_mm_set1_ps(x));
+#endif
+#if defined(__GNUC__)
+        return (FastPow::log2f4(_mm_set1_ps(x)))[0];
+#endif
     }
 
     // Calculates logarithm of float in given base

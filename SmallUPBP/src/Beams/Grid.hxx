@@ -31,7 +31,7 @@
 
 #include "PhotonBeam.hxx"
 #include "GridStats.hxx"
-#include "..\Path\StaticArray.hxx"
+#include "../Path/StaticArray.hxx"
 
 /**
  * @brief	A grid for storing photon beams.

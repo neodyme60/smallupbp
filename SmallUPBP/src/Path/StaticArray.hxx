@@ -29,7 +29,7 @@
 
 #include <algorithm> // For sorting
 
-#include "..\Misc\Defs.hxx"
+#include "../Misc/Defs.hxx"
 
 #define DEBUGARRAY
 

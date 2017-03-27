@@ -32,7 +32,7 @@
 #include <list>
 
 #include "StaticArray.hxx"
-#include "..\Structs\Rgb.hxx"
+#include "../Structs/Rgb.hxx"
 
 //////////////////////////////////////////////////////////////////////////
 // Ray casting structures

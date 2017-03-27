@@ -52,7 +52,12 @@ public:
 	// Gets the second element from the top of the stack
 	const ElementType& SecondFromTop() const
 	{
+#if defined(_MSC_VER)
 		std::forward_list<std::pair<ElementType, int>> ::const_iterator i = mData.cbegin();
+#endif
+#if defined(__GNUC__)
+		typename std::forward_list<std::pair<ElementType, int>> ::const_iterator i = mData.cbegin();
+#endif
 		++i;
 		return i->first;
 	}
@@ -60,9 +65,14 @@ public:
 	// Inserts the given element from the top of the stack right below all elements with priority higher than the given one
 	void Push(ElementType element, int priority)
 	{
+#if defined(_MSC_VER)
 		std::forward_list<std::pair<ElementType, int>>::const_iterator i = mData.cbegin();
 		std::forward_list<std::pair<ElementType, int>>::const_iterator j = mData.cbefore_begin();
-
+#endif
+#if defined(__GNUC__)
+		typename std::forward_list<std::pair<ElementType, int>>::const_iterator i = mData.cbegin();
+		typename std::forward_list<std::pair<ElementType, int>>::const_iterator j = mData.cbefore_begin();
+#endif
 		while (i != mData.cend() && i->second > priority) 
 		{
 			++i;
@@ -76,9 +86,14 @@ public:
 	// Removes the given element with the given priority from the stack. Does nothing if such combination is not present.
 	void Pop(ElementType element, int priority)
 	{
+#if defined(_MSC_VER)
 		std::forward_list<std::pair<ElementType, int>>::const_iterator i = mData.cbegin();
 		std::forward_list<std::pair<ElementType, int>>::const_iterator j = mData.cbefore_begin();
-
+#endif
+#if defined(__GNUC__)
+		typename std::forward_list<std::pair<ElementType, int>>::const_iterator i = mData.cbegin();
+		typename std::forward_list<std::pair<ElementType, int>>::const_iterator j = mData.cbefore_begin();
+#endif
 		while (i != mData.cend() && i->second > priority) 
 		{
 			++i;
@@ -104,7 +119,12 @@ public:
 	// Test whether the given element with the given priority is on the stack
 	bool Contains(ElementType element, int priority)
 	{
+#if defined(_MSC_VER)
 		for (std::forward_list<std::pair<ElementType, int>>::const_iterator i = mData.cbegin(); i != mData.cend(); ++i)
+#endif
+#if defined(__GNUC__)
+		for (typename std::forward_list<std::pair<ElementType, int>>::const_iterator i = mData.cbegin(); i != mData.cend(); ++i)
+#endif
 		{
 			if (i->first == element && i->second == priority) return true;
 		}

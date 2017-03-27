@@ -30,9 +30,9 @@
 #include <vector>
 #include <cmath>
 
-#include "..\Path\Frame.hxx"
-#include "..\Path\Ray.hxx"
-#include "..\Misc\Utils2.hxx"
+#include "../Path/Frame.hxx"
+#include "../Path/Ray.hxx"
+#include "../Misc/Utils2.hxx"
 
 #define THIN_WALL_PRIORITY -1
 #define GLOBAL_MEDIUM_PRIORITY -2

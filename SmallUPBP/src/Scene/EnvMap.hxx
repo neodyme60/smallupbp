@@ -27,7 +27,7 @@
 #ifndef __ENVMAP_HXX__
 #define __ENVMAP_HXX__
 
-#include "..\..\..\OpenEXR\ImfRgbaFile.h"
+#include "../../../OpenEXR/ImfRgbaFile.h"
 #include "Distribution.hxx"
 
 class Image {
@@ -146,6 +146,7 @@ private:
 	// Loads, scales and rotates an environment map from an OpenEXR image on the given absolute path.
 	Image* LoadImage(const char *filename, float rotate, float scale) const
 	{
+#if defined(_MSC_VER)
 		Imf::RgbaInputFile file(filename, 1);
 		Imath::Box2i dw = file.dataWindow();
 
@@ -174,6 +175,9 @@ private:
 		delete imHalf;
 
 		return image;
+#else
+		return nullptr;
+#endif
 	}
 
 	// Converts luminance of the given environment map to 2D distribution with latitude-longitude mapping.

@@ -33,12 +33,12 @@
 #include <string.h>
 
 #include "Utils2.hxx"
-#include "..\..\..\OpenEXR\ImfOutputFile.h"
-#include "..\..\..\OpenEXR\ImfInputFile.h"
-#include "..\..\..\OpenEXR\ImfChannelList.h"
-#include "..\..\..\OpenEXR\ImfStringAttribute.h"
-#include "..\..\..\OpenEXR\ImfMatrixAttribute.h"
-#include "..\..\..\OpenEXR\ImfArray.h"
+#include "../../../OpenEXR/ImfOutputFile.h"
+#include "../../../OpenEXR/ImfInputFile.h"
+#include "../../../OpenEXR/ImfChannelList.h"
+#include "../../../OpenEXR/ImfStringAttribute.h"
+#include "../../../OpenEXR/ImfMatrixAttribute.h"
+#include "../../../OpenEXR/ImfArray.h"
 
 /**
  * @brief	A framebuffer.
@@ -250,7 +250,13 @@ public:
 	 */
 	void Save(const char * aFilename, float aGamma = 2.2f)
 	{
-		Save(std::string(aFilename), aGamma);
+#if defined(_MSC_VER)
+        Save(std::string(aFilename), aGamma);
+#endif
+#if defined(__GNUC__)
+        std::string str(aFilename);
+        Save(str, aGamma);
+#endif
 	}
 
 	/**
@@ -260,7 +266,12 @@ public:
 	 * @param [in,out]	aFilename	Name of the image file.
 	 * @param	aGamma			 	(Optional) the gamma.
 	 */
-	void Save(std::string & aFilename, float aGamma = 2.2f)
+#if defined(_MSC_VER)
+    void Save(std::string & aFilename, float aGamma = 2.2f)
+#endif
+#if defined(__GNUC__)
+    void Save(const std::string & aFilename, float aGamma = 2.2f)
+#endif
 	{
 		std::string extension = aFilename.substr(aFilename.length() - 3, 3);
 		if (extension == "bmp")
@@ -377,6 +388,7 @@ private:
      */
 	void SaveOpenEXR(const char* aFilename)
 	{
+#if defined(_MSC_VER)
 		try
 		{
 			Imf::Header header(mResX, mResY);
@@ -415,6 +427,7 @@ private:
 			std::cerr << "Error: saving file failed" << std::endl;
 			exit(2);
 		}
+#endif
 	}
 
     std::vector<Rgb>   mColor;      //!< The color

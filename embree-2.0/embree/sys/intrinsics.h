@@ -144,13 +144,24 @@ __forceinline void __cpuid(int out[4], int op) {
   asm volatile ("cpuid" : "=a"(out[0]), "=b"(out[1]), "=c"(out[2]), "=d"(out[3]) : "a"(op)); 
 }
 
+
+#if defined(_MSC_VER)
 __forceinline uint64 __rdtsc()  {
+#endif
+#if defined(__GNUC__)
+__forceinline uint64 __rdtsc2()  {
+#endif
   uint32 high,low;
   asm volatile ("rdtsc" : "=d"(high), "=a"(low));
   return (((uint64)high) << 32) + (uint64)low;
 }
 
+#if defined(_MSC_VER)
 __forceinline uint64 __rdpmc(int i) {
+#endif
+#if defined(__GNUC__)
+__forceinline uint64 __rdpmc2(int i) {
+#endif
   uint32 high,low;
   asm volatile ("rdpmc" : "=d"(high), "=a"(low) : "c"(i));
   return (((uint64)high) << 32) + (uint64)low;
@@ -266,7 +277,7 @@ __forceinline uint64 rdtsc()
 {
   int dummy[4]; 
   __cpuid(dummy,0); 
-  uint64 clock = __rdtsc(); 
+  uint64 clock = __rdtsc2();
   __cpuid(dummy,0); 
   return clock;
 }

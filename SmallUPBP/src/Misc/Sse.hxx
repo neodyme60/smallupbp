@@ -32,7 +32,7 @@
 #include <smmintrin.h>
 #include <immintrin.h>
 
-#include "..\PrecompiledLibs\FastFloat\FastFloat.h"
+#include "../PrecompiledLibs/FastFloat/FastFloat.h"
 #include "Defs.hxx"
 
 //////////////////////////////////////////////////////////////////////////
@@ -81,7 +81,12 @@ class Float4;
 class Bool4 {
 protected:
 
+#if defined(_MSC_VER)
     __declspec(align(16)) union {
+#endif
+#if defined(__GNUC__)
+    union __attribute__((aligned(16))) {
+#endif
         __m128i _sse;
         int _data[4];
     };
@@ -393,7 +398,7 @@ INLINE std::istream& operator>>(std::istream& is, Float4& vect) {
 // Vector of 4 int values.
 class Int4 {
 public:
-    __declspec(align(16)) union {
+    union __attribute__((aligned(16))){
         __m128i _sse;
 
         struct { 

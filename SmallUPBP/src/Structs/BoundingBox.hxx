@@ -27,12 +27,13 @@
 #ifndef __BOUNDINGBOX_HXX__
 #define __BOUNDINGBOX_HXX__
 
-#include "..\Path\Ray.hxx"
+#include "../Path/Ray.hxx"
 #include "Vector.hxx"
 
 // Axis aligned bounding box (AABB).
 template<class TPoint>
 class BoundingBox {
+public:
 public:
 
     // Point with smallest coordinates in every direction.
@@ -102,6 +103,12 @@ public:
 
     // Returns intersection of this bounding box with another. Result should be tested if it is empty before using.
     INLINE BoundingBox getIntersection( const BoundingBox& other ) const {
+#if defined(_MSC_VER)
+        BoundingBox3 result;
+#endif
+#if defined(__GNUC__)
+        typedef BoundingBox<Pos> BoundingBox3;
+#endif
         BoundingBox3 result;
         result.point1 = TPoint::max(this->point1, other.point1);
         result.point2 = TPoint::min(this->point2, other.point2);
@@ -110,23 +117,33 @@ public:
 
     // Returns vector with size of this BoundingBox in every direction.
     INLINE typename TPoint::DirType size() const {
+#if defined(_MSC_VER)
         return TPoint::DirType(point2 - point1);
+#endif
+#if defined(__GNUC__)
+        return typename TPoint::DirType(point2 - point1);
+#endif
     }
 
     INLINE TPoint getCenter() const {
         return TPoint( (point2+point1) * 0.5f );
     }
 
-    INLINE float getArea() const;
-
-    INLINE float getVolume() const {
-        const TPoint::DirType sizes = this->size();
-        float result = sizes[0];
-        for(int i = 1; i < TPoint::DIMENSION; ++i) {
-            result *= sizes[i];
-        }
-        return result;
-    }
+//    INLINE float getArea() const;
+//
+//    INLINE float getVolume() const {
+//#if defined(_MSC_VER)
+//        const TPoint::DirType sizes = this->size();
+//#endif
+//#if defined(__GNUC__)
+//        const typename TPoint::DirType sizes = this->size();
+//#endif
+//        float result = sizes[0];
+//        for(int i = 1; i < TPoint::DIMENSION; ++i) {
+//            result *= sizes[i];
+//        }
+//        return result;
+//    }
     
     INLINE bool operator==(const BoundingBox& other) const {
         return this->point1 == other.point1 && this->point2 == other.point2;
@@ -160,7 +177,12 @@ public:
     // Returns copy of this bounding box enlarged in each dimension by a factor (both by addition and multiplication).
     INLINE BoundingBox getEpsilonEnlarged(const float factor) const {
         TPoint center = this->getCenter();
+#if defined(_MSC_VER)
         TPoint::DirType size = this->size();
+#endif
+#if defined(__GNUC__)
+        typename TPoint::DirType size = this->size();
+#endif
         size *= (1.f+factor)*0.5f;
         size += TPoint::DirType(factor);
         return BoundingBox(center-size, center+size);
@@ -188,33 +210,51 @@ typedef BoundingBox<Vector4> BoundingBox4;
 typedef BoundingBox<Vector6> BoundingBox6;
 
 
+#if defined(__GNUC__)
+template<>
+#endif
 INLINE bool BoundingBox3::isEmpty() const {
     return (_mm_movemask_ps(_mm_cmpgt_ps(point1.data, point2.data)) & 0x7) == 0x7;
 }
 
-INLINE bool BoundingBox3::contains( const BoundingBox3& other ) const {
-    return (_mm_movemask_ps(_mm_and_ps(_mm_cmple_ps(point1.data, other.point1.data), 
-                                       _mm_cmpge_ps(point2.data, other.point2.data)))& 0x7) == 0x7;
-
-}
-
-INLINE bool BoundingBox3::contains(const Pos point) const {
-    return (_mm_movemask_ps(_mm_and_ps(_mm_cmple_ps(point1.data, point.data), _mm_cmpge_ps(point2.data, point.data)))& 0x7) == 0x7;
-}
-
-float BoundingBox3::getArea() const {
-    const Dir sizes = size();
-    return 2*(sizes.x()*sizes.y() + sizes.x()*sizes.z() + sizes.y()*sizes.z());
-}
-
-Pos BoundingBox3::getNthCorner(const int n) const {
-    UPBP_ASSERT(unsigned(n) < 8u);
-    return Pos((n&1) ? point1.x() : point2.x(), (n&2) ? point1.y() : point2.y(), (n&4) ? point1.z() : point2.z());
-}
+//#if defined(__GNUC__)
+//template<>
+//#endif
+//INLINE bool BoundingBox3::contains( const BoundingBox3& other ) const {
+//    return (_mm_movemask_ps(_mm_and_ps(_mm_cmple_ps(point1.data, other.point1.data),
+//                                       _mm_cmpge_ps(point2.data, other.point2.data)))& 0x7) == 0x7;
+//
+//}
+//
+//#if defined(__GNUC__)
+//template<>
+//#endif
+//INLINE bool BoundingBox3::contains(const Pos point) const {
+//    return (_mm_movemask_ps(_mm_and_ps(_mm_cmple_ps(point1.data, point.data), _mm_cmpge_ps(point2.data, point.data)))& 0x7) == 0x7;
+//}
+//
+//#if defined(__GNUC__)
+//template<>
+//#endif
+//float BoundingBox3::getArea() const {
+//    const Dir sizes = size();
+//    return 2*(sizes.x()*sizes.y() + sizes.x()*sizes.z() + sizes.y()*sizes.z());
+//}
+//
+//#if defined(__GNUC__)
+//template<>
+//#endif
+//Pos BoundingBox3::getNthCorner(const int n) const {
+//    UPBP_ASSERT(unsigned(n) < 8u);
+//    return Pos((n&1) ? point1.x() : point2.x(), (n&2) ? point1.y() : point2.y(), (n&4) ? point1.z() : point2.z());
+//}
 
 // Intersects the bounding box with a ray, returns true if there is an intersection, and stores the minimal and maximal ray parameter of the intersection.
 // invDir is precomputed inverse values of ray.direction, so they don't have to be calculated repeatedly for single ray.
 // According to http://www.flipcode.com/archives/SSE_RayBox_Intersection_Test.shtml
+#if defined(__GNUC__)
+template<>
+#endif
 INLINE bool BoundingBox<Pos>::intersect(const Ray& ray, const Pos::DirType inverseDirection, float& intervalMin, float& intervalMax) const {
 
 //#define loadps(mem)		_mm_load_ps((const float * const)(mem))
